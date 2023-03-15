@@ -41,11 +41,9 @@ function(dataset = NULL, content.field = NULL, content.vec = NULL,
     
     }else if(translator == 'Microsoft' & !microsoft.token){ 
       #without token method
-        translated <- unname(
-          unlist(
-            mclapply(to.translate, function(x) microsoftTranslate(x, microsoft.api.key, microsoft.api.region, source.lang, target.lang))
-          )
-        )
+        translated <- purrr::map_chr(to.translate,function(x) microsoftTranslate(x, 
+                                                microsoft.api.key, microsoft.api.region, source.lang, 
+                                                target.lang))
     }
 
     # Figure out what we should return
